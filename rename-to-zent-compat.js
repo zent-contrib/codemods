@@ -1,6 +1,5 @@
 const os = require("os");
 
-// jscodeshift -t rename-to-zent-compat.js --verbose=2 --extensions='js,jsx' --parser=babylon --no-babel tests
 module.exports = function(fileInfo, api, options) {
   const { j } = api;
   const ast = j(fileInfo.source);

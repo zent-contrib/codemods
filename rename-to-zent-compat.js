@@ -36,20 +36,24 @@ module.exports = function(fileInfo, api, options) {
 
   let shouldTrimBlankLines = false;
   if (insertNew && zentCompat.specifiers.length > 0) {
-    const lastZentImportBeforeRemove = zentImports.at(-1);
+    const last = zentImports.at(-1);
 
-    shouldTrimBlankLines = lastZentImportBeforeRemove.some(path => {
-      const wontRemove = path.node.specifiers.length !== 0;
+    shouldTrimBlankLines = last.some(path => {
+      const willRemove = path.node.specifiers.length === 0;
+      if (willRemove) {
+        return false;
+      }
+
       const endLoc = path.node.loc.end;
       const start = nthIndexOf(fileInfo.source, os.EOL, endLoc.line) + 1;
       const end = nthIndexOf(fileInfo.source, os.EOL, endLoc.line + 1);
       const hasTrailingBlankLines = /^\s*$/.test(
         fileInfo.source.substring(start, end)
       );
-      return hasTrailingBlankLines && wontRemove;
+      return hasTrailingBlankLines;
     });
 
-    lastZentImportBeforeRemove.insertAfter(zentCompat);
+    last.insertAfter(zentCompat);
   }
 
   // remove `import 'zent'`
@@ -86,12 +90,11 @@ function trimBlankLines(source, api) {
       while (true) {
         const end = nthIndexOf(source, os.EOL, endLoc.line + 1);
         const isBlankLine = /^\s*$/.test(source.substring(start, end));
-        if (isBlankLine) {
-          // remove this blank line, including the newline at line end
-          source = removeSubString(source, start, end);
-        } else {
+        if (!isBlankLine) {
           break;
         }
+        // remove this blank line, including the newline
+        source = removeSubString(source, start, end);
       }
     });
 

@@ -86,7 +86,7 @@ function trimBlankLines(source, api) {
     .forEach(path => {
       const endLoc = path.node.loc.end;
       const start = nthIndexOf(source, os.EOL, endLoc.line) + 1;
-      if (start === -1) {
+      if (start === 0) {
         return;
       }
 

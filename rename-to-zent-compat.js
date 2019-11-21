@@ -21,7 +21,7 @@ module.exports = function(fileInfo, api, options) {
     : zentCompatImports.paths()[0].node;
 
   // remove import specifiers
-  ast
+  zentImports
     .find(j.ImportSpecifier, node => {
       const { imported } = node;
       return j.Identifier.check(imported) && imported.name === component;

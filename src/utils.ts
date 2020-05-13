@@ -30,26 +30,6 @@ export function isPlainObject(val: any): val is Record<string, any> {
   );
 }
 
-export function isComponent(
-  component: string,
-  it: core.ASTPath<core.JSXElement>
-) {
-  const name = it.node.name;
-  switch (name.type) {
-    case 'JSXIdentifier':
-      return name.name === component;
-    case 'JSXMemberExpression':
-      return name.property.name === component;
-    case 'JSXNamespacedName':
-      return name.name.name === component;
-    default:
-      throw new TypeError(`Unexpected type of JSXElement['name']`);
-  }
-}
-
-/**
- * 把一个值转为字符串
- */
 export function toString(value: any) {
   if (value && typeof value === 'object') {
     return JSON.stringify(value);
@@ -58,10 +38,6 @@ export function toString(value: any) {
   }
 }
 
-/**
- * 生成字面量的AST节点，包括数组和对象
- * @param value
- */
 export function literal(
   value: any
 ):

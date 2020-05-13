@@ -59,7 +59,7 @@ export function run(
   }
 }
 
-export function getFiles(pattern: string) {
+function getFiles(pattern: string) {
   const files = globby.sync(pattern, { gitignore: true });
   const workingFiles: string[] = [];
   const finishedFiles: string[] = [];

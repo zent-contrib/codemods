@@ -9,7 +9,7 @@ import { Falsey } from 'utility-types';
 
 function getOptions(): IOptions {
   const options: IOptions = {
-    target: 8,
+    target: ZentVersion,
     quote: 'auto',
     silent: false,
     output: false,

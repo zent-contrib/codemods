@@ -128,7 +128,7 @@ export const transformer: Transformer = (ast, { target, file }) => {
           it => it.type === 'JSXAttribute' && it.name.name === prop
         );
         if (attr) {
-          analyze(name.name, msg, file, attr.loc?.start);
+          analyze(uncorrect(name.name), msg, file, attr.loc?.start);
         }
       }
     }

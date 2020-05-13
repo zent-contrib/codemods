@@ -20,6 +20,8 @@ To use these codemods, please install https://github.com/facebook/jscodeshift fi
 
 - `switch-boolean-props`: Switch props which is boolean type as much as possible, and rename them ( if necessary ).
 
+- `cannot-transform`: list the changes cannot be transformed.
+
 ## Test
 
 run `yarn test` to see the testing transform.

@@ -4,6 +4,10 @@
 
 To use these codemods, please install https://github.com/facebook/jscodeshift first.
 
+Before using zent-codemod in your project, please **CLEAN WORKING TREE** of `git` to allow rollback after transform.
+
+It's **NOT** guaranteed that all breaking changes detected. Anyway, It's necessary to look through [Change Log](http://fedoc.qima-inc.com/zent/zh/guides/changelog).
+
 ## Transformers
 
 - `explicit-optional-props`: Explicitly pass optional props whose default value has breaking change.
@@ -55,7 +59,7 @@ zent-codemod all "./src/**/*.+(js,jsx,tsx)"
 - target: the target major release of zent, default is latest major release
 - silent: no stdout, default is `false`
 - output: write to stdout instead of overwriting files
-- color: highlight output when `output` enabled
+- color: language for highlight when `output` enabled
 - quote: style of quote. `'auto' | 'single' | 'double'` is valid, default is `auto`
 
 ## zent-codemod.json
@@ -68,7 +72,7 @@ zent-codemod all "./src/**/*.+(js,jsx,tsx)"
     "target": 8,
     "silent": false,
     "output": false,
-    "color": true,
+    "color": "typescript",
     "quote": "auto"
   }
 }

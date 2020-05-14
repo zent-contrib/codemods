@@ -1,8 +1,8 @@
 import hl from 'cli-highlight';
 
-export function highlight(code: string) {
+export function highlight(code: string, lang: string) {
   return hl(code, {
-    language: 'javascript',
+    language: lang,
     ignoreIllegals: true,
   });
 }

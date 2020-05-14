@@ -28,19 +28,19 @@ export const transformer: Transformer = (ast, { file, target, getLocalByImported
       | undefined;
     if (float) {
       if (!float.value) {
-        analyze(chalk.red(Loading), `替换为 ${chalk.green(FullScreenLoading)}`, file, node.loc?.start);
+        analyze(chalk.red(Loading), `replaced to ${chalk.green(FullScreenLoading)}`, file, node.loc?.start);
         renameJSXElement(node, FullScreenLoading);
         zentImport.find(j.ImportSpecifier).insertBefore(j.importSpecifier(j.identifier(FullScreenLoading)));
       } else {
         analyze(
           chalk.red(Loading),
-          `无法替换为 ${chalk.green(BlockLoading)} 或 ${chalk.green(FullScreenLoading)}`,
+          `cannot be replaced to ${chalk.green(BlockLoading)} 或 ${chalk.green(FullScreenLoading)}`,
           file,
           node.loc?.start
         );
       }
     } else {
-      analyze(chalk.red(Loading), `替换为 ${chalk.green(BlockLoading)}`, file, node.loc?.start);
+      analyze(chalk.red(Loading), `replaced to ${chalk.green(BlockLoading)}`, file, node.loc?.start);
       renameJSXElement(node, BlockLoading);
       zentImport.find(j.ImportSpecifier).insertBefore(j.importSpecifier(j.identifier(BlockLoading)));
     }

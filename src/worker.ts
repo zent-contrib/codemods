@@ -8,7 +8,11 @@ import { resolveTransformer, send } from './utils';
 
 process.on('message', perform);
 
-export async function perform({ file, options: { target, quote, output, silent }, transformers }: IWorkerContext) {
+export async function perform({
+  file,
+  options: { target, quote, output, silent, color },
+  transformers,
+}: IWorkerContext) {
   try {
     const source = (await fs.readFile(file)).toString();
     const ast = j(source);
@@ -31,7 +35,7 @@ export async function perform({ file, options: { target, quote, output, silent }
     if (modified) {
       if (output && modified && !silent) {
         let beautified = out;
-        beautified = highlight(beautified);
+        beautified = highlight(beautified, color);
         beautified = chalk.yellow('1') + '    ' + beautified;
         let count = 2;
         beautified = beautified.replace(/\n/g, e => {

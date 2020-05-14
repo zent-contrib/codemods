@@ -1,4 +1,5 @@
 import * as fs from 'fs-extra';
+import * as path from 'path';
 import globby from 'globby';
 import { IOptions } from './options';
 import { info } from './logger';
@@ -25,7 +26,7 @@ function load() {
   });
   if (configFile && fs.existsSync(configFile)) {
     try {
-      config = require(configFile);
+      config = require(path.resolve(configFile));
       info('using config file ' + configFile);
     } catch (e) {
       // ignore

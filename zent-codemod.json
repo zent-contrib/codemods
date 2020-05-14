@@ -1,0 +1,8 @@
+{
+  "pattern": "./test/v8/*.js",
+  "transformers": ["legacy-to-compat"],
+  "options": {
+    "target": 8,
+    "output": true
+  }
+}

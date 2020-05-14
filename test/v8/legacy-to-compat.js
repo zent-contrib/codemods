@@ -1,1 +1,2 @@
-import { Form, Upload } from 'zent';
+import { Upload } from "@zent/compat";
+import { Form } from 'zent';

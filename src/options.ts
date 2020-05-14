@@ -14,11 +14,11 @@ export function getOptions(): IOptions {
   const config = getConfig();
   Object.assign(options, config?.options, {
     target: Number(program.target || ZentVersion),
-    silent: program.silent,
-    quote: program.quote,
-    output: program.output,
-    color: program.color,
-    force: program.force,
+    silent: program.silent ?? false,
+    quote: program.quote ?? 'auto',
+    output: program.output ?? false,
+    color: program.color ?? 'typescript',
+    force: program.force ?? false,
   });
   return options;
 }

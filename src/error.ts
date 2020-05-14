@@ -1,6 +1,7 @@
 import { red } from 'chalk';
 import { info } from './logger';
-const errors: string[] = [];
+
+export const errors: string[] = [];
 
 export function pushError(msg: string) {
   errors.push(red('X') + ' ' + msg);

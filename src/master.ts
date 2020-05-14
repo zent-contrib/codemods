@@ -7,6 +7,7 @@ import { info } from './logger';
 import { getOptions, IOptions } from '.';
 import { printAnalyzes, analyze } from './analyze';
 import * as path from 'path';
+import { errors } from './error';
 
 export function run(
   transformers: string[],
@@ -46,7 +47,7 @@ export function run(
     if (!files.exhausted()) {
       worker.send(createWorkerContext());
     } else if (files.finish()) {
-      process.exit(0);
+      process.exit(errors.length);
     }
   }
 

@@ -1,5 +1,5 @@
-import { Transformer } from '../utils';
 import chalk from 'chalk';
+import { Transformer } from '../utils';
 import { analyze } from '../analyze';
 
 type Version = number;
@@ -17,19 +17,12 @@ const data: Record<Version, Record<Component, Transform>> = {
     },
     Pagination: {
       props: [
-        [
-          'onChange',
-          `the type of the first parameter changes from ${uncorrect(
-            'number'
-          )} to ${correct('object')}`,
-        ],
+        ['onChange', `the type of the first parameter changes from ${uncorrect('number')} to ${correct('object')}`],
         ['onPageSizeChange', `use new ${correct('onChange')} with page info`],
         ['maxPageToShow', `use ${correct('formatTotal')} to implement it`],
         [
           'pageSize',
-          `${uncorrect('pageSize')} now is split into ${correct(
-            'pageSize'
-          )} and ${correct('pageSizeOptions')}`,
+          `${uncorrect('pageSize')} now is split into ${correct('pageSize')} and ${correct('pageSizeOptions')}`,
         ],
       ],
     },
@@ -38,9 +31,7 @@ const data: Record<Version, Record<Component, Transform>> = {
         ['onPageSizeChange', `use new ${correct('onChange')} with page info`],
         [
           'pageInfo',
-          `${uncorrect('pageSize')} now is split into ${correct(
-            'pageSize'
-          )} and ${correct('pageSizeOptions')}`,
+          `${uncorrect('pageSize')} now is split into ${correct('pageSize')} and ${correct('pageSizeOptions')}`,
         ],
       ],
     },
@@ -49,21 +40,12 @@ const data: Record<Version, Record<Component, Transform>> = {
         ['onPageSizeChange', `use new ${correct('onChange')} with page info`],
         [
           'pageInfo',
-          `${uncorrect('pageSize')} now is split into ${correct(
-            'pageSize'
-          )} and ${correct('pageSizeOptions')}`,
+          `${uncorrect('pageSize')} now is split into ${correct('pageSize')} and ${correct('pageSizeOptions')}`,
         ],
       ],
     },
     Loading: {
-      props: [
-        [
-          'float',
-          `use ${correct('FullScreenLoading')} for float or ${correct(
-            'BlockLoading'
-          )} for non-float`,
-        ],
-      ],
+      props: [['float', `use ${correct('FullScreenLoading')} for float or ${correct('BlockLoading')} for non-float`]],
     },
     Tree: {
       props: [['onCheck', `breaking change on ${uncorrect('parameters')}`]],
@@ -72,9 +54,7 @@ const data: Record<Version, Record<Component, Transform>> = {
       props: [
         [
           'onChange',
-          `the type of the parameter changes from ${uncorrect(
-            'Event'
-          )} to ${correct('string')} or ${correct(
+          `the type of the parameter changes from ${uncorrect('Event')} to ${correct('string')} or ${correct(
             'number'
           )}(with enabled integer)`,
         ],
@@ -84,10 +64,7 @@ const data: Record<Version, Record<Component, Transform>> = {
     Col: `use ${correct('LayoutCol')} within ${correct('LayoutGrid')}`,
     Tag: {
       props: [
-        [
-          'onVisibleChange',
-          `use ${correct('visible')} and ${correct('onClose')}`,
-        ],
+        ['onVisibleChange', `use ${correct('visible')} and ${correct('onClose')}`],
         ['borderColor', `use ${correct('style.borderColor')}`],
         ['bgColor', `use ${correct('style.backgroundColor')}`],
         ['fontColor', `use ${correct('style.color')}`],
@@ -124,9 +101,7 @@ export const transformer: Transformer = (ast, { target, file }) => {
       analyze(name.name, transform, file, node.loc?.start);
     } else {
       for (const [prop, msg] of transform.props) {
-        const attr = attributes.find(
-          it => it.type === 'JSXAttribute' && it.name.name === prop
-        );
+        const attr = attributes.find(it => it.type === 'JSXAttribute' && it.name.name === prop);
         if (attr) {
           analyze(uncorrect(name.name), msg, file, attr.loc?.start);
         }

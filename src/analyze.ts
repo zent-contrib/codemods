@@ -3,12 +3,7 @@ import { send } from './utils';
 
 const analyzes: Record<string, Record<string, string[]>> = {};
 
-export function analyze(
-  component: string,
-  message: string,
-  file: string,
-  loc?: { line: number; column: number }
-) {
+export function analyze(component: string, message: string, file: string, loc?: { line: number; column: number }) {
   if (loc) {
     file += `:${loc.line}:${loc.column + 1}`;
   }
@@ -35,13 +30,9 @@ export function analyze(
 export function printAnalyzes() {
   if (!Object.keys(analyzes).length) {
     console.log('');
-    console.log(
-      'Nothing transformed. This can be caused by the following reasons: '
-    );
+    console.log('Nothing transformed. This can be caused by the following reasons: ');
     console.log('1. There are few incompatibilities');
-    console.log(
-      '2. Incompatibilities can be complicated to change. Check the change log carefully. Go for it ! 🚀'
-    );
+    console.log('2. Incompatibilities can be complicated to change. Check the change log carefully. Go for it ! 🚀');
   } else {
     console.log('');
     console.log('⬇️  Zent Codemod Analyzes');
@@ -57,8 +48,6 @@ export function printAnalyzes() {
     }
   }
   console.log('');
-  console.log(
-    `${green('Change Log')}: http://fedoc.qima-inc.com/zent/zh/guides/changelog`
-  );
+  console.log(`${green('Change Log')}: http://fedoc.qima-inc.com/zent/zh/guides/changelog`);
   console.log('');
 }

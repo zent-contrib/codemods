@@ -1,7 +1,7 @@
+import core from 'jscodeshift';
 import { Transformer, entries } from '../utils';
 import { analyze } from '../analyze';
-import { red, green } from 'chalk';
-import core from 'jscodeshift';
+import { green, red } from 'chalk';
 import { j } from '../jscodeshift';
 
 const data: Record<number, Record<string, Record<string, string>>> = {
@@ -36,10 +36,7 @@ const data: Record<number, Record<string, Record<string, string>>> = {
   },
 };
 
-export const transformer: Transformer = (
-  ast,
-  { file, target, getImported, findZentJSXElements }
-) => {
+export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
   const changelog = data[target];
   if (!changelog) {
     return;
@@ -55,16 +52,11 @@ export const transformer: Transformer = (
       const props = changelog[getImported(name.name)];
       if (props) {
         for (const [prev, next] of entries(props)) {
-          const attr = openingElement.attributes.find(
-            it => it.type === 'JSXAttribute' && it.name.name === prev
-          ) as core.JSXAttribute | undefined;
+          const attr = openingElement.attributes.find(it => it.type === 'JSXAttribute' && it.name.name === prev) as
+            | core.JSXAttribute
+            | undefined;
           if (attr) {
-            analyze(
-              name.name,
-              `${red(prev)} -> ${green(next)}`,
-              file,
-              attr.loc?.start
-            );
+            analyze(name.name, `${red(prev)} -> ${green(next)}`, file, attr.loc?.start);
             attr.name = j.jsxIdentifier(next);
           }
         }

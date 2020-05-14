@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import globby from 'globby';
-import { info } from './logger';
 import { IOptions } from '.';
+import { info } from './logger';
 
 export interface IConfiguration {
   pattern?: string;
@@ -27,7 +27,9 @@ function load() {
     try {
       config = require(configFile);
       info('using config file ' + configFile);
-    } catch (e) {}
+    } catch (e) {
+      // ignore
+    }
   }
   loaded = true;
 }

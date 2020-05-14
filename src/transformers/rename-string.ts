@@ -1,19 +1,9 @@
-import { analyze } from '../analyze';
-import { red, green, yellow } from 'chalk';
-import {
-  ComponentName,
-  PropName,
-  Version,
-  Transformer,
-  getJSXElementName,
-  entries,
-} from '../utils';
 import core from 'jscodeshift';
+import { ComponentName, PropName, Transformer, Version, entries, getJSXElementName } from '../utils';
+import { analyze } from '../analyze';
+import { green, red, yellow } from 'chalk';
 
-const data: Record<
-  Version,
-  Record<ComponentName, Record<PropName, Record<string, string>>>
-> = {
+const data: Record<Version, Record<ComponentName, Record<PropName, Record<string, string>>>> = {
   7: {
     Alert: {
       type: {
@@ -31,10 +21,7 @@ const data: Record<
   },
 };
 
-export const transformer: Transformer = (
-  ast,
-  { file, target, getImported, findZentJSXElements }
-) => {
+export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
   const changelog = data[target];
   if (!changelog) {
     return;
@@ -55,15 +42,13 @@ export const transformer: Transformer = (
       return;
     }
     for (const [prop, values] of entries(props)) {
-      const attr = attributes.find(
-        it => it.type === 'JSXAttribute' && it.name.name === prop
-      ) as core.JSXAttribute | undefined;
+      const attr = attributes.find(it => it.type === 'JSXAttribute' && it.name.name === prop) as
+        | core.JSXAttribute
+        | undefined;
       if (attr?.value?.type === 'StringLiteral' && values[attr.value.value]) {
         analyze(
           getImported(local),
-          `${yellow(attr.name.name)}: ${red(attr.value.value)} -> ${green(
-            values[attr.value.value]
-          )}`,
+          `${yellow(attr.name.name)}: ${red(attr.value.value)} -> ${green(values[attr.value.value])}`,
           file
         );
         attr.value.value = values[attr.value.value];

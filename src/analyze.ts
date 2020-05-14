@@ -48,6 +48,6 @@ export function printAnalyzes() {
     }
   }
   console.log('');
-  console.log(`${green('Change Log')}: http://fedoc.qima-inc.com/zent/zh/guides/changelog`);
+  console.log(`${green('Change Log')}: https://youzan.github.io/zent/zh/guides/changelog`);
   console.log('');
 }

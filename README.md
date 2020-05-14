@@ -6,7 +6,7 @@ To use these codemods, please install https://github.com/facebook/jscodeshift fi
 
 Before using zent-codemod in your project, please **CLEAN WORKING TREE** of `git` to allow rollback after transform.
 
-It's **NOT** guaranteed that all breaking changes detected. Anyway, It's necessary to look through [Change Log](http://fedoc.qima-inc.com/zent/zh/guides/changelog).
+It's **NOT** guaranteed that all breaking changes detected. Anyway, It's necessary to look through [Change Log](https://youzan.github.io/zent/zh/guides/changelog).
 
 ## Transformers
 

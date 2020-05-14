@@ -9,6 +9,7 @@ export function getOptions(): IOptions {
     silent: false,
     output: false,
     color: 'javascript',
+    force: false,
   };
   const config = getConfig();
   Object.assign(options, config?.options, {
@@ -17,6 +18,7 @@ export function getOptions(): IOptions {
     quote: program.quote,
     output: program.output,
     color: program.color,
+    force: program.force,
   });
   return options;
 }
@@ -27,4 +29,5 @@ export interface IOptions {
   silent: boolean;
   output: boolean;
   color: string;
+  force: boolean;
 }

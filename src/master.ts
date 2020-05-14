@@ -11,7 +11,7 @@ import { info } from './logger';
 import { printError, pushError } from './error';
 
 export function run(transformers: string[], pattern: string, options: IOptions) {
-  checkGitWorkingTree();
+  options.force || checkGitWorkingTree();
   info('start working');
   console.log('');
   const files = getFiles(pattern);

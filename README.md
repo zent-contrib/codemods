@@ -61,6 +61,7 @@ zent-codemod all "./src/**/*.+(js,jsx,tsx)"
 - output: write to stdout instead of overwriting files, default is `false`
 - color: language for highlight when `output` enabled, default is `typescript`
 - quote: style of quote. `'auto' | 'single' | 'double'` is valid, default is `auto`
+- force: skip check for git working tree, default is `false`
 
 ## zent-codemod.json
 
@@ -73,7 +74,8 @@ zent-codemod all "./src/**/*.+(js,jsx,tsx)"
     "silent": false,
     "output": false,
     "color": "typescript",
-    "quote": "auto"
+    "quote": "auto",
+    "force": false
   }
 }
 ```

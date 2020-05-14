@@ -56,10 +56,10 @@ zent-codemod all "./src/**/*.+(js,jsx,tsx)"
 
 ## Options
 
-- target: the target major release of zent, default is latest major release
+- target: the target major release of zent, default is **latest major release**
 - silent: no stdout, default is `false`
-- output: write to stdout instead of overwriting files
-- color: language for highlight when `output` enabled
+- output: write to stdout instead of overwriting files, default is `false`
+- color: language for highlight when `output` enabled, default is `typescript`
 - quote: style of quote. `'auto' | 'single' | 'double'` is valid, default is `auto`
 
 ## zent-codemod.json

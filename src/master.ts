@@ -1,6 +1,7 @@
 import * as path from 'path';
+import chalk from 'chalk';
 import globby from 'globby';
-import { ChildProcess, fork } from 'child_process';
+import { ChildProcess, execSync, fork } from 'child_process';
 import { IOptions, getOptions } from './options';
 import { IWorkerContext, WorkerMessage } from './worker';
 import { analyze, printAnalyzes } from './analyze';
@@ -10,6 +11,7 @@ import { info } from './logger';
 import { printError, pushError } from './error';
 
 export function run(transformers: string[], pattern: string, options: IOptions) {
+  checkGitWorkingTree();
   info('start working');
   console.log('');
   const files = getFiles(pattern);
@@ -99,4 +101,18 @@ function getFiles(pattern: string) {
     exhausted,
     finish,
   };
+}
+
+function checkGitWorkingTree() {
+  try {
+    const msg = execSync('git status');
+    if (!msg.includes('working tree clean')) {
+      console.log(
+        chalk.yellow('WARNING: ') +
+          `Please ${chalk.yellow(chalk.bold('CLEAN'))} working tree before running zent-codemod`
+      );
+      process.exit(1);
+    }
+    /* eslint-disable-next-line no-empty */
+  } catch (e) {}
 }

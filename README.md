@@ -4,59 +4,72 @@
 
 To use these codemods, please install https://github.com/facebook/jscodeshift first.
 
-## rename-to-zent-compat
+## Transformers
 
-This codemod renames a component import from `zent` to `@zent/compat`.
+- `explicit-optional-props`: Explicitly pass optional props whose default value has breaking change.
 
-#### In
+- `legacy-to-compat`: Move legacy components to `@zent/compat`.
 
-```js
-import { Button, Form } from 'zent';
+- `refactor-loading`: Transform `Loading` elements as much as possible. Only for `--target 7`
+
+- `remove-deprecated-props`: Remove deprecated props.
+
+- `rename-props`: Rename props whose name has been change.
+
+- `rename-string`: Rename literal string of some props which has been renamed.
+
+- `switch-boolean-props`: Switch props which is boolean type as much as possible, and rename them ( if necessary ).
+
+- `cannot-transform`: list the changes cannot be transformed.
+
+## Test
+
+run `yarn test` to see the testing transform.
+
+## Usage
+
+```sh
+zent-codemod [transformer] [options]
 ```
 
-#### Out
-
-```js
-// Only rename Form
-import { Button } from 'zent';
-import { Form } from '@zent/compat';
+```sh
+# use configuration file
+zent-codemod
 ```
 
-#### Usage
+```sh
+# use specified transformer and pattern
+zent-codemod \
+legacy-to-compat \
+"./src/**/*.+(js,jsx,tsx)" \
+-t 7
+```
 
-This transform has two options:
+```sh
+# use all transformers
+zent-codemod all "./src/**/*.+(js,jsx,tsx)"
+```
 
-- `component`: component to rename
-- `quote`: single or double quote, double is default
+## Options
 
-```bash
-# .ts files
-jscodeshift \
-  -t rename-to-zent-compat.js \
-  --no-babel \
-  --extensions=ts \
-  --parser=ts \
-  --component=Form \
-  --quote=single \
-  /path/to/your/code/directory
+- target: the target major release of zent, default is latest major release
+- silent: no stdout, default is `false`
+- output: write to stdout instead of overwriting files
+- color: highlight output when `output` enabled
+- quote: style of quote. `'auto' | 'single' | 'double'` is valid, default is `auto`
 
-# tsx
-jscodeshift \
-  -t rename-to-zent-compat.js \
-  --no-babel \
-  --extensions=tsx \
-  --parser=tsx \
-  --component=Form \
-  --quote=single \
-  /path/to/your/code/directory
+## zent-codemod.json
 
-# js/jsx
-jscodeshift \
-  -t rename-to-zent-compat.js \
-  --no-babel \
-  --extensions='js,jsx' \
-  --parser=babylon \
-  --component=Form \
-  --quote=single \
-  /path/to/your/code/directory
+```json
+{
+  "pattern": "**/*",
+  "transformers": ["legacy-to-compat"],
+  "options": {
+    "target": 8,
+    "silent": false,
+    "output": false,
+    "color": true,
+    "quote": "auto"
+  }
+}
 ```

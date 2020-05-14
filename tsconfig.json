@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "CommonJS",
+    "lib": ["ES2017", "ES2018.Promise"],
+    "strict": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "noEmitHelpers": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "outDir": "./dist"
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
+}

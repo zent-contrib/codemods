@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import commander from 'commander';
-import { ZentVersion } from './version';
+import { ZentVersion } from './zent';
 import { getConfig } from './config';
 import { getOptions } from './options';
 import { info } from './logger';
@@ -51,5 +51,4 @@ program
   .option('-s --silent', 'no stdout, default is false')
   .option('-t --target <target>', 'target verison of zent, default is ' + ZentVersion)
   .option('-o --output', 'write to output instead of overwriting files')
-  .option('-c --color', 'highlight output')
   .option('-q --quote', 'tells code generator which style of quote to use');

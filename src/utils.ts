@@ -12,9 +12,9 @@ export interface ITransformContext {
   file: string;
   zentImport: Collection<core.ImportDeclaration>;
   zentImportSpecifiers: Collection<core.ImportSpecifier>;
-  getLocal(component: string): string | undefined;
-  getImported(local: string): string;
-  findZentJSXElements(): Collection<core.JSXElement>;
+  zentJSXElements: Collection<core.JSXElement>;
+  getLocalByImported(imported: string): string | undefined;
+  getImportedByLocal(local: string): string | undefined;
 }
 
 export type Transformer = (ast: Collection<any>, ctx: ITransformContext) => void;
@@ -75,8 +75,13 @@ export function getJSXElementName(node: core.JSXOpeningElement) {
     case 'JSXIdentifier':
       return node.name.name;
     case 'JSXMemberExpression':
-      return node.name.property.name;
+      return spreadJSXMemberExpression(node.name);
     default:
-      return null;
+      throw new Error(`JSXNamespacedName is not supported.`);
   }
+}
+
+export function spreadJSXMemberExpression(expr: core.JSXMemberExpression): string {
+  const { object, property } = expr;
+  return (object.type === 'JSXIdentifier' ? object.name : spreadJSXMemberExpression(object)) + '.' + property.name;
 }

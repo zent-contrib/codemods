@@ -8,17 +8,17 @@ const Loading = 'Loading';
 const FullScreenLoading = 'FullScreenLoading';
 const BlockLoading = 'BlockLoading';
 
-export const transformer: Transformer = (ast, { file, target, getLocal, zentImport }) => {
+export const transformer: Transformer = (ast, { file, target, getLocalByImported, zentJSXElements, zentImport }) => {
   if (target !== 7) {
     return;
   }
 
-  const local = getLocal(Loading);
+  const local = getLocalByImported(Loading);
   if (!local) {
     return;
   }
 
-  const elms = ast.findJSXElements(local);
+  const elms = zentJSXElements.findJSXElements(local);
   zentImport.find(j.ImportSpecifier, (it: core.ImportSpecifier) => it.imported.name === Loading).remove();
 
   elms.forEach(it => {

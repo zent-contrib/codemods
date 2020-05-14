@@ -12,15 +12,13 @@ const data: Record<number, Record<string, Record<string, string>>> = {
   },
 };
 
-export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
+export const transformer: Transformer = (ast, { file, target, getImportedByLocal, zentJSXElements }) => {
   const changelog = data[target];
   if (!changelog) {
     return;
   }
 
-  const elms = findZentJSXElements();
-
-  elms.forEach(it => {
+  zentJSXElements.forEach(it => {
     const { node } = it;
     const { openingElement } = node;
     const { attributes } = openingElement;
@@ -29,7 +27,11 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
       return;
     }
 
-    const props = changelog[getImported(local)];
+    const imported = getImportedByLocal(local);
+    if (!imported) {
+      return;
+    }
+    const props = changelog[imported];
     if (!props) {
       return;
     }
@@ -41,6 +43,7 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
 
       if (attr) {
         const value = attr.value;
+        attr.name = j.jsxIdentifier(next);
         if (!value) {
           attr.value = j.jsxExpressionContainer(j.booleanLiteral(false));
         } else if (value.type === 'JSXExpressionContainer') {
@@ -51,7 +54,7 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
           } else {
             continue;
           }
-          analyze(getImported(local), `${red(prev)} rename to ${green(next)}, switch it`, file, attr.loc?.start);
+          analyze(imported, `${red(prev)} rename to ${green(next)}, switch it`, file, attr.loc?.start);
         }
       }
     }

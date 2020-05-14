@@ -1,4 +1,4 @@
-import { ZentVersion } from './version';
+import { ZentVersion } from './zent';
 import { getConfig } from './config';
 import { program } from './program';
 
@@ -8,11 +8,10 @@ export function getOptions(): IOptions {
     quote: 'auto',
     silent: false,
     output: false,
-    color: true,
   };
   const config = getConfig();
   Object.assign(options, config?.options, {
-    target: Number(program.target),
+    target: Number(program.target || ZentVersion),
     silent: program.silent,
     quote: program.quote,
     output: program.output,
@@ -25,5 +24,4 @@ export interface IOptions {
   quote: 'single' | 'double' | 'auto';
   silent: boolean;
   output: boolean;
-  color: boolean;
 }

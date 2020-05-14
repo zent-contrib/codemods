@@ -1,19 +1,14 @@
 import * as fs from 'fs-extra';
 import chalk from 'chalk';
-import core from 'jscodeshift';
-import { Collection } from 'jscodeshift/src/Collection';
 import { IOptions } from './options';
+import { createZentHelper } from './zent-helper';
 import { highlight } from './hl';
 import { j } from './jscodeshift';
-import { keys, resolveTransformer, send } from './utils';
+import { resolveTransformer, send } from './utils';
 
 process.on('message', perform);
 
-export async function perform({
-  file,
-  options: { target, quote, output, color, silent },
-  transformers,
-}: IWorkerContext) {
+export async function perform({ file, options: { target, quote, output, silent }, transformers }: IWorkerContext) {
   try {
     const source = (await fs.readFile(file)).toString();
     const ast = j(source);
@@ -36,7 +31,7 @@ export async function perform({
     if (modified) {
       if (output && modified && !silent) {
         let beautified = out;
-        beautified = color ? highlight(beautified) : beautified;
+        beautified = highlight(beautified);
         beautified = chalk.yellow('1') + '    ' + beautified;
         let count = 2;
         beautified = beautified.replace(/\n/g, e => {
@@ -57,42 +52,6 @@ export async function perform({
       message: error?.stack || error?.message || 'unknown error',
     });
   }
-}
-
-function createZentHelper(ast: Collection<any>) {
-  const mapComponentToLocals: Record<string, string> = {};
-  const zentImport = ast.find(j.ImportDeclaration, (node: core.ImportDeclaration) => node.source.value === 'zent');
-  const zentImportSpecifiers = zentImport.find(j.ImportSpecifier);
-  zentImportSpecifiers.forEach(it => {
-    mapComponentToLocals[it.node.imported.name] = it.node.local?.name || it.node.imported.name;
-  });
-  /**
-   * 根据组件名找出组件在当前模块的别名
-   * @param component 组件名
-   * @returns 组件的别名
-   */
-  function getLocal(component: string): string | undefined {
-    return mapComponentToLocals[component];
-  }
-  function getImported(local: string) {
-    return keys(mapComponentToLocals).find(it => mapComponentToLocals[it] === local) as string;
-  }
-  function findZentJSXElements() {
-    return ast.findJSXElements().filter(it => {
-      const { name } = it.node.openingElement;
-      return (
-        name.type === 'JSXIdentifier' &&
-        zentImportSpecifiers.some(it => (it.node.local || it.node.imported).name === name.name)
-      );
-    });
-  }
-  return {
-    getLocal,
-    getImported,
-    findZentJSXElements,
-    zentImport,
-    zentImportSpecifiers,
-  };
 }
 
 export interface IWorkerContext {

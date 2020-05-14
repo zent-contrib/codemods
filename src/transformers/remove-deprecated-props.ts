@@ -19,21 +19,23 @@ const data: Record<number, Record<string, string[]>> = {
   },
 };
 
-export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
+export const transformer: Transformer = (ast, { file, target, getImportedByLocal, zentJSXElements }) => {
   const changelog = data[target];
   if (!changelog) {
     return;
   }
 
-  const elms = findZentJSXElements();
-
-  elms.forEach(it => {
+  zentJSXElements.forEach(it => {
     const { openingElement } = it.node;
     const local = getJSXElementName(openingElement);
     if (!local) {
       return;
     }
-    const props = changelog[getImported(local)];
+    const imported = getImportedByLocal(local);
+    if (!imported) {
+      return;
+    }
+    const props = changelog[imported];
     if (!props) {
       return;
     }
@@ -41,13 +43,13 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
       it => it.type === 'JSXAttribute' && it.name.type === 'JSXIdentifier' && props.includes(it.name.name)
     ) as core.JSXAttribute[];
     for (const prop of deprecatedProps) {
-      analyze(getImported(local), `remove ${chalk.red(prop.name.name)}`, file, it.node.loc?.start);
+      analyze(imported, `remove ${chalk.red(prop.name.name)}`, file, it.node.loc?.start);
     }
     openingElement.attributes = openingElement.attributes.filter(
       it => it.type === 'JSXAttribute' && !deprecatedProps.includes(it)
     );
     if (props.includes('children')) {
-      analyze(getImported(local), `remove ${chalk.red('children')}`, file, it.node.loc?.start);
+      analyze(imported, `remove ${chalk.red('children')}`, file, it.node.loc?.start);
       it.node.children = [];
       it.node.closingElement = null;
       openingElement.selfClosing = true;

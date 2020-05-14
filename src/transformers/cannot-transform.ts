@@ -60,8 +60,8 @@ const data: Record<Version, Record<Component, Transform>> = {
         ],
       ],
     },
-    Row: `use ${correct('LayoutRow')} within ${correct('LayoutGrid')}`,
-    Col: `use ${correct('LayoutCol')} within ${correct('LayoutGrid')}`,
+    'Layout.Row': `use ${correct('LayoutRow')} within ${correct('LayoutGrid')}`,
+    'Layout.Col': `use ${correct('LayoutCol')} within ${correct('LayoutGrid')}`,
     Tag: {
       props: [
         ['onVisibleChange', `use ${correct('visible')} and ${correct('onClose')}`],

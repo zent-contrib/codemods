@@ -1,5 +1,7 @@
 import { Select, Cascader } from 'zent';
 
-<Select prefix="select" data={[]}></Select>;
+// console.log(<Select prefix="select" data={[]}></Select>);
+console.log(<Select prefix="select" data={[]}></Select>);
 
-<Cascader prefix="cascader" data={[]}></Cascader>;
+// console.log(<Cascader prefix="cascader" data={[]}></Cascader>);
+console.log(<Cascader prefix="cascader" data={[]}></Cascader>);

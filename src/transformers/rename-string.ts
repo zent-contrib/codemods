@@ -21,15 +21,13 @@ const data: Record<Version, Record<ComponentName, Record<PropName, Record<string
   },
 };
 
-export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
+export const transformer: Transformer = (ast, { file, target, getImportedByLocal, zentJSXElements }) => {
   const changelog = data[target];
   if (!changelog) {
     return;
   }
 
-  const elms = findZentJSXElements();
-
-  elms.forEach(it => {
+  zentJSXElements.forEach(it => {
     const { node } = it;
     const { openingElement } = node;
     const { attributes } = openingElement;
@@ -37,7 +35,11 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
     if (!local) {
       return;
     }
-    const props = changelog[getImported(local)];
+    const imported = getImportedByLocal(local);
+    if (!imported) {
+      return;
+    }
+    const props = changelog[imported];
     if (!props) {
       return;
     }
@@ -47,7 +49,7 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
         | undefined;
       if (attr?.value?.type === 'StringLiteral' && values[attr.value.value]) {
         analyze(
-          getImported(local),
+          imported,
           `${yellow(attr.name.name)}: ${red(attr.value.value)} -> ${green(values[attr.value.value])}`,
           file
         );

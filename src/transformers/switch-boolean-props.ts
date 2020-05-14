@@ -51,7 +51,7 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
           } else {
             continue;
           }
-          analyze(local, `${red(prev)} rename to ${green(next)}, switch it`, file, attr.loc?.start);
+          analyze(getImported(local), `${red(prev)} rename to ${green(next)}, switch it`, file, attr.loc?.start);
         }
       }
     }

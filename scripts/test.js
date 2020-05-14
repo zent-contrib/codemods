@@ -16,15 +16,9 @@ const v8 = fs.readdirSync(v8Dir);
  */
 function test(dir, files, args) {
   for (const file of files) {
-    execSync(
-      `node ./dist/index.js ${file.replace('.js', '')} ${path.join(
-        dir,
-        file
-      )} ${args}`,
-      {
-        stdio: 'inherit',
-      }
-    );
+    execSync(`node ./dist/index.js ${file.replace('.js', '')} ${path.join(dir, file)} ${args}`, {
+      stdio: 'inherit',
+    });
   }
 }
 

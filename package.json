@@ -1,6 +1,6 @@
 {
   "name": "zent-codemod",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.5",
   "main": "dist/index.js",
   "bin": "./bin/zent-codemod.js",
   "repository": "git@github.com:zent-contrib/codemods.git",
@@ -20,7 +20,8 @@
     "globby": "^11.0.0",
     "jscodeshift": "^0.9.0",
     "tslib": "^1.11.2",
-    "utility-types": "^3.10.0"
+    "utility-types": "^3.10.0",
+    "zent-codemod": "^0.1.0-beta.5"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",

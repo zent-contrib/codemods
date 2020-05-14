@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import chalk from 'chalk';
 import core from 'jscodeshift';
 import { Collection } from 'jscodeshift/src/Collection';
-import { IOptions } from '.';
+import { IOptions } from './options';
 import { highlight } from './hl';
 import { j } from './jscodeshift';
 import { keys, resolveTransformer, send } from './utils';
@@ -51,7 +51,11 @@ export async function perform({
     }
     send({ action: 'done', file });
   } catch (error) {
-    send({ action: 'error', message: error?.message || '', file });
+    send({
+      file,
+      action: 'error',
+      message: error?.stack || error?.message || 'unknown error',
+    });
   }
 }
 

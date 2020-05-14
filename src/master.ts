@@ -1,7 +1,7 @@
 import * as path from 'path';
 import globby from 'globby';
 import { ChildProcess, fork } from 'child_process';
-import { IOptions, getOptions } from '.';
+import { IOptions, getOptions } from './options';
 import { IWorkerContext, WorkerMessage } from './worker';
 import { analyze, printAnalyzes } from './analyze';
 import { cpus } from 'os';
@@ -39,6 +39,13 @@ export function run(transformers: string[], pattern: string, options: IOptions) 
       }
     });
   }
+
+  process.on('exit', () => {
+    if (!getOptions().silent) {
+      printAnalyzes();
+      printError();
+    }
+  });
 
   function perform(worker: ChildProcess) {
     if (!files.exhausted()) {
@@ -93,10 +100,3 @@ function getFiles(pattern: string) {
     finish,
   };
 }
-
-process.on('exit', e => {
-  if (!getOptions().silent && !e) {
-    printAnalyzes();
-    printError();
-  }
-});

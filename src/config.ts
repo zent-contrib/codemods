@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import globby from 'globby';
-import { IOptions } from '.';
+import { IOptions } from './options';
 import { info } from './logger';
 
 export interface IConfiguration {

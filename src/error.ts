@@ -3,8 +3,8 @@ import { red } from 'chalk';
 
 export const errors: string[] = [];
 
-export function pushError(msg: string) {
-  errors.push(red('X') + ' ' + msg);
+export function pushError(message: string) {
+  errors.push(red('X') + ' ' + message);
 }
 
 export function printError() {
@@ -12,6 +12,7 @@ export function printError() {
     info('Some error occured during transform: ');
   }
   for (const error of errors) {
+    console.log('');
     console.log(error);
   }
 }

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import core from 'jscodeshift';
-import { Transformer } from '../utils';
+import { Transformer, getJSXElementName } from '../utils';
 import { analyze } from '../analyze';
 
 const data: Record<number, Record<string, string[]>> = {
@@ -20,8 +20,8 @@ const data: Record<number, Record<string, string[]>> = {
 };
 
 export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
-  const deprecated = data[target] || {};
-  if (!deprecated) {
+  const changelog = data[target];
+  if (!changelog) {
     return;
   }
 
@@ -29,25 +29,29 @@ export const transformer: Transformer = (ast, { file, target, getImported, findZ
 
   elms.forEach(it => {
     const { openingElement } = it.node;
-    const { name: elmName } = openingElement;
-    if (elmName.type === 'JSXIdentifier') {
-      const props = deprecated[getImported(elmName.name)];
-      const deprecatedProps = openingElement.attributes.filter(
-        it => it.type === 'JSXAttribute' && it.name.type === 'JSXIdentifier' && props.includes(it.name.name)
-      ) as core.JSXAttribute[];
-      for (const prop of deprecatedProps) {
-        analyze(elmName.name, `remove ${chalk.red(prop.name.name)}`, file, it.node.loc?.start);
-      }
-      openingElement.attributes = openingElement.attributes.filter(
-        it => it.type === 'JSXAttribute' && !deprecatedProps.includes(it)
-      );
-      if (props.includes('children')) {
-        analyze(elmName.name, `remove ${chalk.red('children')}`, file, it.node.loc?.start);
-        it.node.children = [];
-        it.node.closingElement = null;
-        openingElement.selfClosing = true;
-        it.node.selfClosing = true;
-      }
+    const local = getJSXElementName(openingElement);
+    if (!local) {
+      return;
+    }
+    const props = changelog[getImported(local)];
+    if (!props) {
+      return;
+    }
+    const deprecatedProps = openingElement.attributes.filter(
+      it => it.type === 'JSXAttribute' && it.name.type === 'JSXIdentifier' && props.includes(it.name.name)
+    ) as core.JSXAttribute[];
+    for (const prop of deprecatedProps) {
+      analyze(getImported(local), `remove ${chalk.red(prop.name.name)}`, file, it.node.loc?.start);
+    }
+    openingElement.attributes = openingElement.attributes.filter(
+      it => it.type === 'JSXAttribute' && !deprecatedProps.includes(it)
+    );
+    if (props.includes('children')) {
+      analyze(getImported(local), `remove ${chalk.red('children')}`, file, it.node.loc?.start);
+      it.node.children = [];
+      it.node.closingElement = null;
+      openingElement.selfClosing = true;
+      it.node.selfClosing = true;
     }
   });
 };

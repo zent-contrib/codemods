@@ -1,7 +1,7 @@
-import { Transformer, getJSXElementName, entries } from '../utils';
-import { analyze } from '../analyze';
-import { red, green } from 'chalk';
 import core from 'jscodeshift';
+import { Transformer, entries, getJSXElementName } from '../utils';
+import { analyze } from '../analyze';
+import { green, red } from 'chalk';
 import { j } from '../jscodeshift';
 
 const data: Record<number, Record<string, Record<string, string>>> = {
@@ -12,10 +12,7 @@ const data: Record<number, Record<string, Record<string, string>>> = {
   },
 };
 
-export const transformer: Transformer = (
-  ast,
-  { file, target, getImported, findZentJSXElements }
-) => {
+export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
   const changelog = data[target];
   if (!changelog) {
     return;
@@ -38,9 +35,9 @@ export const transformer: Transformer = (
     }
 
     for (const [prev, next] of entries(props)) {
-      const attr = attributes.find(
-        it => it.type === 'JSXAttribute' && it.name.name === prev
-      ) as core.JSXAttribute | undefined;
+      const attr = attributes.find(it => it.type === 'JSXAttribute' && it.name.name === prev) as
+        | core.JSXAttribute
+        | undefined;
 
       if (attr) {
         const value = attr.value;
@@ -54,12 +51,7 @@ export const transformer: Transformer = (
           } else {
             continue;
           }
-          analyze(
-            local,
-            `${red(prev)} rename to ${green(next)}, switch it`,
-            file,
-            attr.loc?.start
-          );
+          analyze(local, `${red(prev)} rename to ${green(next)}, switch it`, file, attr.loc?.start);
         }
       }
     }

@@ -1,9 +1,9 @@
-import { Collection } from 'jscodeshift/src/Collection';
-import { j } from './jscodeshift';
-import core from 'jscodeshift';
-import { WorkerMessage } from './worker';
 import * as path from 'path';
+import core from 'jscodeshift';
+import { Collection } from 'jscodeshift/src/Collection';
+import { WorkerMessage } from './worker';
 import { info } from './logger';
+import { j } from './jscodeshift';
 
 export const { is, keys, values, entries } = Object;
 
@@ -17,17 +17,10 @@ export interface ITransformContext {
   findZentJSXElements(): Collection<core.JSXElement>;
 }
 
-export type Transformer = (
-  ast: Collection<any>,
-  ctx: ITransformContext
-) => void;
+export type Transformer = (ast: Collection<any>, ctx: ITransformContext) => void;
 
 export function isPlainObject(val: any): val is Record<string, any> {
-  return (
-    val &&
-    typeof val === 'object' &&
-    Object.prototype.toString.call(val) === '[object Object]'
-  );
+  return val && typeof val === 'object' && Object.prototype.toString.call(val) === '[object Object]';
 }
 
 export function toString(value: any) {
@@ -38,20 +31,12 @@ export function toString(value: any) {
   }
 }
 
-export function literal(
-  value: any
-):
-  | core.Literal
-  | core.Identifier
-  | core.ObjectExpression
-  | core.ArrayExpression {
+export function literal(value: any): core.Literal | core.Identifier | core.ObjectExpression | core.ArrayExpression {
   if (value === undefined) {
     return j.identifier('undefined');
   } else if (isPlainObject(value)) {
     return j.objectExpression(
-      Object.keys(value).map(key =>
-        j.objectProperty(j.stringLiteral(key), literal(value[key]))
-      )
+      Object.keys(value).map(key => j.objectProperty(j.stringLiteral(key), literal(value[key])))
     );
   } else if (Array.isArray(value)) {
     return j.arrayExpression(value.map(it => literal(it)));

@@ -1,5 +1,5 @@
-import { red } from 'chalk';
 import { info } from './logger';
+import { red } from 'chalk';
 
 export const errors: string[] = [];
 

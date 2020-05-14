@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-import { analyze } from '../analyze';
-import { Transformer } from '../utils';
 import core from 'jscodeshift';
+import { Transformer } from '../utils';
+import { analyze } from '../analyze';
 
 const data: Record<number, Record<string, string[]>> = {
   7: {
@@ -19,10 +19,7 @@ const data: Record<number, Record<string, string[]>> = {
   },
 };
 
-export const transformer: Transformer = (
-  ast,
-  { file, target, getImported, findZentJSXElements }
-) => {
+export const transformer: Transformer = (ast, { file, target, getImported, findZentJSXElements }) => {
   const deprecated = data[target] || {};
   if (!deprecated) {
     return;
@@ -36,29 +33,16 @@ export const transformer: Transformer = (
     if (elmName.type === 'JSXIdentifier') {
       const props = deprecated[getImported(elmName.name)];
       const deprecatedProps = openingElement.attributes.filter(
-        it =>
-          it.type === 'JSXAttribute' &&
-          it.name.type === 'JSXIdentifier' &&
-          props.includes(it.name.name)
+        it => it.type === 'JSXAttribute' && it.name.type === 'JSXIdentifier' && props.includes(it.name.name)
       ) as core.JSXAttribute[];
       for (const prop of deprecatedProps) {
-        analyze(
-          elmName.name,
-          `remove ${chalk.red(prop.name.name)}`,
-          file,
-          it.node.loc?.start
-        );
+        analyze(elmName.name, `remove ${chalk.red(prop.name.name)}`, file, it.node.loc?.start);
       }
       openingElement.attributes = openingElement.attributes.filter(
         it => it.type === 'JSXAttribute' && !deprecatedProps.includes(it)
       );
       if (props.includes('children')) {
-        analyze(
-          elmName.name,
-          `remove ${chalk.red('children')}`,
-          file,
-          it.node.loc?.start
-        );
+        analyze(elmName.name, `remove ${chalk.red('children')}`, file, it.node.loc?.start);
         it.node.children = [];
         it.node.closingElement = null;
         openingElement.selfClosing = true;

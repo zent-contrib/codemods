@@ -1,11 +1,13 @@
-import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as path from 'path';
 import commander from 'commander';
-import { info } from './logger';
-import { run } from './master';
+import { Falsey } from 'utility-types';
 import { ZentVersion } from './version';
 import { getConfig } from './config';
-import { Falsey } from 'utility-types';
+import { info } from './logger';
+import { run } from './master';
+
+const program = commander.version('0.0.1');
 
 function getOptions(): IOptions {
   const options: IOptions = {
@@ -33,6 +35,7 @@ interface IOptions {
   color: boolean;
 }
 
+/* eslint-disable-next-line no-undef */
 export { getOptions, IOptions };
 
 const transformsDir = path.join(__dirname, 'transformers');
@@ -40,8 +43,6 @@ const allTransformers = fs
   .readdirSync(transformsDir)
   .filter(it => it.match(/\.js$/))
   .map(it => it.replace('.js', ''));
-
-const program = commander.version('0.0.1');
 
 program.action(() => {
   const config = getConfig();
@@ -77,10 +78,7 @@ program.command('all <glob_pattern>').action((pattern: string) => {
 
 program
   .option('-s --silent', 'no stdout, default is false')
-  .option(
-    '-t --target <target>',
-    'target verison of zent, default is ' + ZentVersion
-  )
+  .option('-t --target <target>', 'target verison of zent, default is ' + ZentVersion)
   .option('-o --output', 'write to output instead of overwriting files')
   .option('-c --color', 'highlight output')
   .option('-q --quote', 'tells code generator which style of quote to use');

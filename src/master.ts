@@ -1,19 +1,15 @@
-import { fork, ChildProcess } from 'child_process';
-import globby from 'globby';
-import { cpus } from 'os';
-import { IWorkerContext, WorkerMessage } from './worker';
-import { pushError, printError } from './error';
-import { info } from './logger';
-import { getOptions, IOptions } from '.';
-import { printAnalyzes, analyze } from './analyze';
 import * as path from 'path';
+import globby from 'globby';
+import { ChildProcess, fork } from 'child_process';
+import { IOptions, getOptions } from '.';
+import { IWorkerContext, WorkerMessage } from './worker';
+import { analyze, printAnalyzes } from './analyze';
+import { cpus } from 'os';
 import { errors } from './error';
+import { info } from './logger';
+import { printError, pushError } from './error';
 
-export function run(
-  transformers: string[],
-  pattern: string,
-  options: IOptions
-) {
+export function run(transformers: string[], pattern: string, options: IOptions) {
   info('start working');
   console.log('');
   const files = getFiles(pattern);
@@ -32,6 +28,7 @@ export function run(
       switch (e.action) {
         case 'error':
           pushError(e.message);
+        /* eslint-disable-next-line no-fallthrough */
         case 'done':
           files.done(e.file);
           perform(worker);

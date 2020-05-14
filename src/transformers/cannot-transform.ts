@@ -103,7 +103,7 @@ export const transformer: Transformer = (ast, { target, file }) => {
       for (const [prop, msg] of transform.props) {
         const attr = attributes.find(it => it.type === 'JSXAttribute' && it.name.name === prop);
         if (attr) {
-          analyze(uncorrect(name.name), msg, file, attr.loc?.start);
+          analyze(uncorrect(name.name), chalk.yellow(prop) + ': ' + msg, file, attr.loc?.start);
         }
       }
     }

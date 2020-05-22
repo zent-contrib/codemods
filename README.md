@@ -31,7 +31,7 @@ run `yarn test` to see the testing transform.
 ## Usage
 
 ```sh
-zent-codemod [transformer] [options]
+zent-codemod [transformer] [pattern] [options]
 ```
 
 ```sh

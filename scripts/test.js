@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
@@ -22,5 +24,5 @@ function test(dir, files, args) {
   }
 }
 
-test(v7Dir, v7, '-t 7 -o');
-test(v8Dir, v8, '-t 8 -o');
+test(v7Dir, v7, '-t 7 -o -f -s');
+test(v8Dir, v8, '-t 8 -o -f');

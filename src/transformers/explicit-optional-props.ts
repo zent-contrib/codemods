@@ -2,7 +2,7 @@ import core from 'jscodeshift';
 import { Transformer, getJSXElementName, literal, toString } from '../utils';
 import { analyze } from '../analyze';
 import { j } from '../jscodeshift';
-import { red, yellow } from 'chalk';
+import { yellow } from 'chalk';
 
 const data: Record<number, Record<string, { name: string; value: any }[]>> = {
   7: {
@@ -39,7 +39,7 @@ export const transformer: Transformer = (ast, { file, target, zentJSXElements, g
       if (!attr) {
         analyze(
           imported,
-          `The default value of ${yellow(name)} has been changed. Explicitly specify it as ${red(toString(value))}`,
+          `The default value of ${yellow(name)} has been changed. Explicitly specify it as ${yellow(toString(value))}`,
           file,
           it.node.loc?.end
         );

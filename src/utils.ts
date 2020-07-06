@@ -85,3 +85,5 @@ export function spreadJSXMemberExpression(expr: core.JSXMemberExpression): strin
   const { object, property } = expr;
   return (object.type === 'JSXIdentifier' ? object.name : spreadJSXMemberExpression(object)) + '.' + property.name;
 }
+
+export const isMaster = !!process.send;

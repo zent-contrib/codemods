@@ -1,6 +1,7 @@
 import * as fs from 'fs-extra';
 import chalk from 'chalk';
 import { IOptions } from './options';
+import { br, plain } from './logger';
 import { createZentHelper } from './zent-helper';
 import { highlight } from './hl';
 import { j } from './jscodeshift';
@@ -8,6 +9,10 @@ import { resolveTransformer, send } from './utils';
 
 process.on('message', perform);
 
+/**
+ * 当master分配任务时执行
+ * @param context
+ */
 export async function perform({
   file,
   options: { target, quote, output, silent, color },
@@ -41,10 +46,10 @@ export async function perform({
         beautified = beautified.replace(/\n/g, e => {
           return e + chalk.yellow(count++) + ' '.repeat(5 - (count - 1).toString().length);
         });
-        console.log(file);
-        console.log(beautified);
-        console.log('');
-      } else {
+        plain(file);
+        plain(beautified);
+        br();
+      } else if (!output) {
         await fs.writeFile(file, out);
       }
     }

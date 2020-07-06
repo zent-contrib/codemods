@@ -51,4 +51,5 @@ program
   .option('-s --silent', 'no stdout, default is false')
   .option('-t --target <target>', 'target verison of zent, default is ' + ZentVersion)
   .option('-o --output', 'write to output instead of overwriting files')
+  .option('-f --force', 'skip check for git working tree')
   .option('-q --quote', 'tells code generator which style of quote to use');

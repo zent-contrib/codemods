@@ -5,15 +5,26 @@ import { ChildProcess, execSync, fork } from 'child_process';
 import { IOptions, getOptions } from './options';
 import { IWorkerContext, WorkerMessage } from './worker';
 import { analyze, printAnalyzes } from './analyze';
+import { br, info, warn } from './logger';
 import { cpus } from 'os';
 import { errors } from './error';
-import { info } from './logger';
 import { printError, pushError } from './error';
 
+/**
+ * 创建worker，在其中跑代码转换的任务，主进
+ * 程仅接收worker发出的消息，不做代码转换的
+ * 操作
+ * @param transformers
+ * @param pattern
+ * @param options
+ */
 export function run(transformers: string[], pattern: string, options: IOptions) {
-  options.force || checkGitWorkingTree();
+  if (!options.force) {
+    checkGitWorkingTree();
+  }
+
   info('start working');
-  console.log('');
+  br();
   const files = getFiles(pattern);
   if (files.exhausted()) {
     info(`no matched files by ${pattern}, check your project`);
@@ -49,6 +60,10 @@ export function run(transformers: string[], pattern: string, options: IOptions) 
     }
   });
 
+  /**
+   * 为worker分配下一个任务
+   * @param worker
+   */
   function perform(worker: ChildProcess) {
     if (!files.exhausted()) {
       worker.send(createWorkerContext());
@@ -57,6 +72,9 @@ export function run(transformers: string[], pattern: string, options: IOptions) 
     }
   }
 
+  /**
+   * 创建参数供worker使用
+   */
   function createWorkerContext(): IWorkerContext {
     return {
       file: files.next(),
@@ -103,14 +121,14 @@ function getFiles(pattern: string) {
   };
 }
 
+/**
+ * 检查git状态，必须commit所有改动后才可以进行转换
+ */
 function checkGitWorkingTree() {
   try {
     const msg = execSync('git status');
     if (!msg.includes('working tree clean')) {
-      console.log(
-        chalk.yellow('WARNING: ') +
-          `Please ${chalk.yellow(chalk.bold('CLEAN'))} working tree before running zent-codemod`
-      );
+      warn(`Please ${chalk.yellow(chalk.bold('CLEAN'))} working tree before running zent-codemod`);
       process.exit(1);
     }
     /* eslint-disable-next-line no-empty */

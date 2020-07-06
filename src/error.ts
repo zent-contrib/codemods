@@ -1,4 +1,4 @@
-import { info } from './logger';
+import { br, info, plain } from './logger';
 import { red } from 'chalk';
 
 export const errors: string[] = [];
@@ -12,7 +12,7 @@ export function printError() {
     info('Some error occured during transform: ');
   }
   for (const error of errors) {
-    console.log('');
-    console.log(error);
+    br();
+    plain(error);
   }
 }

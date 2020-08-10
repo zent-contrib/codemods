@@ -13,7 +13,7 @@ const availableTransformers = fs
   .filter(it => it.match(/\.js$/))
   .map(it => it.replace('.js', ''));
 
-export const program = commander.version('0.0.1');
+export const program = commander.version(require('../package.json').version);
 
 program.action(() => {
   const config = getConfig();

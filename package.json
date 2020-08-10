@@ -1,6 +1,6 @@
 {
   "name": "zent-codemod",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "main": "dist/index.js",
   "bin": "./bin/zent-codemod.js",
   "repository": "git@github.com:zent-contrib/codemods.git",
@@ -10,7 +10,8 @@
     "dev": "tsc -w",
     "build": "rimraf ./dist && tsc",
     "lint": "eslint ./src --ext ts",
-    "test": "node ./scripts/test.js"
+    "test": "node ./scripts/test.js",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "chalk": "^4.0.0",

@@ -6,6 +6,10 @@
   "repository": "git@github.com:zent-contrib/codemods.git",
   "author": "Youzan FE",
   "license": "MIT",
+  "files": [
+    "dist",
+    "bin"
+  ],
   "scripts": {
     "dev": "tsc -w",
     "build": "rimraf ./dist && tsc",

@@ -34,6 +34,11 @@ const data: Record<number, Record<string, Record<string, string>>> = {
       onTabChange: 'onChange',
     },
   },
+  9: {
+    'Popover.Trigger.Click': {
+      autoClose: 'closeOnClickOutside',
+    },
+  },
 };
 
 export const transformer: Transformer = (ast, { file, target, getImportedByLocal, zentJSXElements }) => {

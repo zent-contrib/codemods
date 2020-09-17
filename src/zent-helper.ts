@@ -28,7 +28,7 @@ export function createZentHelper(ast: Collection<any>) {
     if (local.includes('.')) {
       const [namespace, ...chain] = local.split('.');
       const importedComponent = importedComponents.find(it => it.local === namespace);
-      return importedComponent && importedComponent.imported + chain.join('.');
+      return importedComponent && importedComponent.imported + '.' + chain.join('.');
     } else {
       return importedComponents.find(it => it.local === local)?.imported;
     }

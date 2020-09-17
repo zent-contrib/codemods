@@ -6,7 +6,7 @@ Before using zent-codemod in your project, please **CLEAN WORKING TREE** of `git
 
 It's **NOT** guaranteed that all breaking changes detected. Anyway, It's necessary to look through [Change Log](https://youzan.github.io/zent/zh/guides/changelog).
 
-⚠️ `zent-codemod` inferences components that be used in a file by analyzing import statement. This means the components which be imported by object destruction like `const { Trigger } = Popover` **CANNOT** be discovered by analyzer.
+⚠️ Codemods inferences components that be used in a file by analyzing import statements. This means the components which be imported by object destruction like `const { Trigger } = Popover` **CANNOT** be discovered by analyzer.
 
 ## Transformers
 
@@ -42,15 +42,15 @@ zent-codemod
 ```
 
 ```sh
-# use specified transformer and pattern
+# run specified transformer with pattern
 zent-codemod \
 legacy-to-compat \
-"./src/**/*.+(js,jsx,tsx)" \
+"./src/**/*.{js,jsx,tsx}" \
 -t 7
 ```
 
 ```sh
-# use all transformers
+# run all transformers
 zent-codemod all "./src/**/*.+(js,jsx,tsx)"
 ```
 

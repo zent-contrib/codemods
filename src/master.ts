@@ -5,7 +5,7 @@ import { ChildProcess, execSync, fork } from 'child_process';
 import { IOptions, getOptions } from './options';
 import { IWorkerContext, WorkerMessage } from './worker';
 import { analyze, printAnalyzes } from './analyze';
-import { br, info, warn } from './logger';
+import { br, debug, info, warn } from './logger';
 import { cpus } from 'os';
 import { errors } from './error';
 import { printError, pushError } from './error';
@@ -26,6 +26,8 @@ export function run(transformers: string[], pattern: string, options: IOptions) 
   info('start working');
   br();
   const files = getFiles(pattern);
+  debug('matched files');
+  debug(JSON.stringify(files, null, 2));
   if (files.exhausted()) {
     info(`no matched files by ${pattern}, check your project`);
     process.exit(0);

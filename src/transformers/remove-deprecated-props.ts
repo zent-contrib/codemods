@@ -102,7 +102,7 @@ export const transformer: Transformer = (ast, { file, target, getImportedByLocal
       analyze(imported, `remove ${chalk.red(prop.name.name)}`, file, it.node.loc?.start);
     }
     openingElement.attributes = openingElement.attributes.filter(
-      it => it.type === 'JSXAttribute' && !deprecatedProps.includes(it)
+      it => it.type !== 'JSXAttribute' || !deprecatedProps.includes(it)
     );
     if (props.includes('children')) {
       analyze(imported, `remove ${chalk.red('children')}`, file, it.node.loc?.start);

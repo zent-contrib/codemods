@@ -73,9 +73,13 @@ export const transformer: Transformer = (ast, { file, target, zentImportSpecifie
     }
     i++;
   }
-  if (zentCompatImport.specifiers.length) {
+  if (formulrImport.specifiers.length) {
     ast.find(j.Program, (it: core.Program) => {
       it.body.unshift(formulrImport);
+    });
+  }
+  if (zentCompatImport.specifiers.length) {
+    ast.find(j.Program, (it: core.Program) => {
       it.body.unshift(zentCompatImport);
     });
   }

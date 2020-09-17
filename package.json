@@ -1,6 +1,6 @@
 {
   "name": "zent-codemod",
-  "version": "0.2.0-alpha.3",
+  "version": "0.2.0-alpha.4",
   "main": "dist/index.js",
   "bin": "./bin/zent-codemod.js",
   "repository": "git@github.com:zent-contrib/codemods.git",

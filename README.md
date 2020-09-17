@@ -6,6 +6,8 @@ Before using zent-codemod in your project, please **CLEAN WORKING TREE** of `git
 
 It's **NOT** guaranteed that all breaking changes detected. Anyway, It's necessary to look through [Change Log](https://youzan.github.io/zent/zh/guides/changelog).
 
+`zent-codemod` inferences components that be used in a file by analyzing import statement. This means the components which be imported by object destruction like `const { Trigger } = Popover` **CANNOT** be discovered by analyzer.
+
 ## Transformers
 
 - `explicit-optional-props`: Explicitly pass optional props whose default value has breaking change.

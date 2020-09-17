@@ -11,7 +11,8 @@
     "build": "rimraf ./dist && tsc",
     "lint": "eslint ./src --ext ts",
     "test": "node ./scripts/test.js",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "postversion": "npm publish"
   },
   "dependencies": {
     "chalk": "^4.0.0",

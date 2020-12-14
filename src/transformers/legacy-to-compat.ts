@@ -14,6 +14,8 @@ const data: Record<number, ILegacy[]> = {
   8: [{ type: 'standard', name: 'Upload' }],
   9: [
     { type: 'standard', name: 'Popover' },
+    { type: 'standard', name: 'Pop' },
+    { type: 'standard', name: 'Tooltip' },
     { type: 'standard', name: 'Select' },
     { type: 'standard', name: 'QuarterPicker' },
     { type: 'standard', name: 'TimePicker' },

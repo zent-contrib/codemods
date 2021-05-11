@@ -1703,9 +1703,9 @@ locate-path@^5.0.0:
     p-locate "^4.1.0"
 
 lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
-  version "4.17.15"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
@@ -2709,17 +2709,3 @@ yargs@^15.0.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.1"
-
-zent-codemod@^0.1.0-beta.5:
-  version "0.1.0-beta.5"
-  resolved "https://registry.npmjs.org/zent-codemod/-/zent-codemod-0.1.0-beta.5.tgz#21c6d87744accab63296d84b99799836ddaccdb7"
-  integrity sha512-v7o2R7ei+uf1nJQSBA0m+5d3k1RU2dOdxaJ4NbgzM0urYf6kiy6qw8JK1rO4U8FYi/wyWYTeTsRvXkfaR7dKoA==
-  dependencies:
-    chalk "^4.0.0"
-    cli-highlight "^2.1.4"
-    commander "^5.1.0"
-    fs-extra "^9.0.0"
-    globby "^11.0.0"
-    jscodeshift "^0.9.0"
-    tslib "^1.11.2"
-    utility-types "^3.10.0"

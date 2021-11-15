@@ -51,6 +51,8 @@ import {
   Select as ZentSelect,
   Cascader,
   Cascader as ZentCascader,
+  Table,
+  Table as ZentTable,
   QuarterPicker,
   QuarterPicker as ZentQuarterPicker,
   TimePicker,

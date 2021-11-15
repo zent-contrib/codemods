@@ -17,6 +17,8 @@ const data: Record<number, ILegacy[]> = {
     { type: 'standard', name: 'Pop' },
     { type: 'standard', name: 'Tooltip' },
     { type: 'standard', name: 'Select' },
+    { type: 'standard', name: 'Table' },
+    { type: 'standard', name: 'ITableColumn' },
     { type: 'standard', name: 'QuarterPicker' },
     { type: 'standard', name: 'TimePicker' },
     { type: 'standard', name: 'DatePicker' },

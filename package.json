@@ -16,7 +16,7 @@
     "lint": "eslint ./src --ext ts",
     "test": "node ./scripts/test.js",
     "prepublishOnly": "yarn build",
-    "postversion": "npm publish"
+    "postversion": "npm publish --registry=https://registry.npmjs.org"
   },
   "dependencies": {
     "chalk": "^4.0.0",

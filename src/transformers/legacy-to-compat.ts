@@ -62,7 +62,7 @@ export const transformer: Transformer = (ast, { file, target, zentImportSpecifie
       zentImportSpecifiers.at(i).remove();
       analyze(
         importedname,
-        `import from ${green(`@zent/compat${target.type === 'standard' ? '' : 'formulr/form-components'}`)}`,
+        `import from ${green(`@zent/compat${target.type === 'standard' ? '' : '/formulr/form-components'}`)}`,
         file
       );
       if (target.type === 'standard') {

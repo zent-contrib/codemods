@@ -52,7 +52,7 @@ import {
   Cascader,
   Cascader as ZentCascader,
   Table,
-  Table as ZentTable,
+  ITableColumn,
   QuarterPicker,
   QuarterPicker as ZentQuarterPicker,
   TimePicker,

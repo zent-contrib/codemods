@@ -1,6 +1,6 @@
 {
   "name": "@zent/codemods",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "bin": "./bin/zent-codemod.js",
   "repository": "git@github.com:zent-contrib/codemods.git",
@@ -16,7 +16,7 @@
     "lint": "eslint ./src --ext ts",
     "test": "node ./scripts/test.js",
     "prepublishOnly": "yarn build",
-    "postversion": "npm publish --registry=https://registry.npmjs.org"
+    "postversion": "npm publish --registry=https://registry.npmjs.org --access=public"
   },
   "dependencies": {
     "chalk": "^4.0.0",

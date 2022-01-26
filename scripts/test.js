@@ -7,10 +7,12 @@ const path = require('path');
 const v7Dir = './test/v7';
 const v8Dir = './test/v8';
 const v9Dir = './test/v9';
+const v10Dir = './test/v10';
 
 const v7 = fs.readdirSync(v7Dir);
 const v8 = fs.readdirSync(v8Dir);
 const v9 = fs.readdirSync(v9Dir);
+const v10 = fs.readdirSync(v10Dir);
 
 /**
  *
@@ -29,3 +31,4 @@ function test(dir, files, args) {
 test(v7Dir, v7, '-t 7 -o -f -s');
 test(v8Dir, v8, '-t 8 -o -f');
 test(v9Dir, v9, '-t 9 -o -f');
+test(v10Dir, v10, '-t 10 -o -f');

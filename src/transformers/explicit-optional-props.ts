@@ -15,6 +15,12 @@ const data: Record<number, Record<string, { name: string; value: any }[]>> = {
     ],
     Affix: [{ name: 'offsetTop', value: 0 }],
   },
+  10: {
+    FullScreenLoading: [{ name: 'icon', value: 'youzan' }],
+    BlockLoading: [{ name: 'icon', value: 'youzan' }],
+    InlineLoading: [{ name: 'icon', value: 'youzan' }],
+    Tag: [{ name: 'theme', value: 'red' }],
+  },
 };
 
 export const transformer: Transformer = (ast, { file, target, zentJSXElements, getImportedByLocal }) => {

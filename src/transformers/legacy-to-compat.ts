@@ -40,6 +40,10 @@ const data: Record<number, ILegacy[]> = {
     { type: 'formulr', name: 'FormTimePickerField' },
     { type: 'formulr', name: 'FormTimeRangePickerField' },
   ],
+  10: [
+    { type: 'standard', name: 'Tree' },
+    { type: 'standard', name: 'Link' },
+  ],
 };
 
 export const transformer: Transformer = (ast, { file, target, zentImportSpecifiers }) => {

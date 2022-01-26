@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import core from 'jscodeshift';
-import { Transformer, renameJSXElement } from '../utils';
+import { Transformer, getJSXElementName, renameJSXElement } from '../utils';
 import { analyze } from '../analyze';
 import { j } from '../jscodeshift';
 
@@ -9,7 +9,7 @@ const FullScreenLoading = 'FullScreenLoading';
 const BlockLoading = 'BlockLoading';
 
 export const transformer: Transformer = (ast, { file, target, getLocalByImported, zentJSXElements, zentImport }) => {
-  if (target !== 7) {
+  if (Number(target) !== 7) {
     return;
   }
 
@@ -18,7 +18,7 @@ export const transformer: Transformer = (ast, { file, target, getLocalByImported
     return;
   }
 
-  const elms = zentJSXElements.findJSXElements(local);
+  const elms = zentJSXElements.filter(it => getJSXElementName(it.node.openingElement) === local);
   zentImport.find(j.ImportSpecifier, (it: core.ImportSpecifier) => it.imported.name === Loading).remove();
 
   elms.forEach(it => {

@@ -73,6 +73,9 @@ const data: Record<number, Record<string, string[]>> = {
     'Trigger.Hover': ['isOutSide', 'quirk'],
     Hover: ['isOutSide', 'quirk'],
   },
+  10: {
+    Button: ['bordered'],
+  },
 };
 
 export const transformer: Transformer = (ast, { file, target, getImportedByLocal, zentJSXElements }) => {

@@ -44,9 +44,6 @@ const data: Record<Version, Record<Component, Transform>> = {
         ],
       ],
     },
-    Loading: {
-      props: [['float', `use ${correct('FullScreenLoading')} for float or ${correct('BlockLoading')} for non-float`]],
-    },
     Tree: {
       props: [['onCheck', `breaking change on ${uncorrect('parameters')}`]],
     },

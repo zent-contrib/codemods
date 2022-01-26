@@ -22,6 +22,8 @@ It's **NOT** guaranteed that all breaking changes detected. Anyway, It's necessa
 
 - `rename-string`: Rename literal string of some props which has been renamed.
 
+- `rename-component`: Rename components whose name has been change.
+
 - `switch-boolean-props`: Switch props which is boolean type as much as possible, and rename them ( if necessary ).
 
 - `cannot-transform`: list the changes cannot be transformed.

@@ -5,7 +5,7 @@
   "bin": "./bin/zent-codemod.js",
   "repository": "git@github.com:zent-contrib/codemods.git",
   "author": "Youzan FE",
-  "license": "MIT",
+  "license": "GPL",
   "files": [
     "dist",
     "bin"

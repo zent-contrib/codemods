@@ -35,8 +35,10 @@ export const transformer: Transformer = (
     // 替换 import
     zentImportSpecifiers.forEach(it => {
       const { node } = it;
-      analyze(chalk.red(oldName), `rename to ${chalk.green(newName)}`, file, node.loc?.start);
-      node.imported.name = newName;
+      if (node.imported.name === oldName) {
+        analyze(chalk.red(oldName), `rename to ${chalk.green(newName)}`, file, node.loc?.start);
+        node.imported.name = newName;
+      }
     });
   }
 };
